@@ -38,7 +38,7 @@ public class CreateOrderTest {
     //тут баг
     public void createOrderNoAuthorization(){
         Ingredients ingredients = new Ingredients(id);
-        ValidatableResponse response = orderHandles.createOrder(ingredients, "").log().all();
+        ValidatableResponse response = orderHandles.createOrder(ingredients, "");
         Boolean success = response.extract().path("success");
         Assert.assertEquals(400, response.extract().statusCode());
         Assert.assertEquals(false, success);
@@ -46,7 +46,7 @@ public class CreateOrderTest {
     @Test
     public void createOrderWithoutIngredients(){
         Ingredients ingredients = new Ingredients("");
-        ValidatableResponse response = orderHandles.createOrder(ingredients, token).log().all();
+        ValidatableResponse response = orderHandles.createOrder(ingredients, token);
         String message = response.extract().path("message");
         Assert.assertEquals(400, response.extract().statusCode());
         Assert.assertEquals("Ingredient ids must be provided", message);
