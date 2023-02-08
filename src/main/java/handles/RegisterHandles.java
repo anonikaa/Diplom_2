@@ -10,6 +10,13 @@ public class RegisterHandles {
                 .body(register)
                 .when()
                 .post("https://stellarburgers.nomoreparties.site/api/auth/register").then();
-
+    }
+    //тут чё-то надо передавать конечно
+    public ValidatableResponse deleteUser (String token){
+        return given()
+                .header("Content-type", "application/json")
+                .header("authorization", token)
+                .when()
+                .delete("https://stellarburgers.nomoreparties.site/api/auth/user").then();
     }
 }

@@ -1,6 +1,8 @@
 import handles.LoginHandles;
 import handles.RegisterHandles;
 import io.restassured.response.ValidatableResponse;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import pojo.Login;
 import pojo.Register;
@@ -8,15 +10,23 @@ import pojo.Register;
 import static org.junit.Assert.assertEquals;
 
 public class LoginTest {
-    RegisterHandles registerHandles = new RegisterHandles();
-    LoginHandles loginHandles = new LoginHandles();
+    private Register register;
+    private RegisterHandles registerHandles;
+    private LoginHandles loginHandles;
+    String token;
+    @Before
+    public void setUp(){
+        register = new Register("anana@hrr.com", "123456", "name");
+        registerHandles = new RegisterHandles();
+        loginHandles = new LoginHandles();
+        token = registerHandles.registerNewUser(register).extract().path("accessToken");
+    }
+    @After
+    public void cleanUp(){
+        registerHandles.deleteUser(token);
+    }
     @Test
-    //нужна параметризация данных для реги
-    // + саму регу вынести в Before
     public void successLoginExistUser(){
-        Register register = new Register("testNasty@test.com", "123", "Nasty");
-        registerHandles.registerNewUser(register);
-
         Login login = new Login(register.getEmail(), register.getPassword());
         ValidatableResponse response = loginHandles.login(login);
 
@@ -26,9 +36,6 @@ public class LoginTest {
     }
     @Test
     public void loginWithWrongEmail(){
-        Register register = new Register("ppp@ppp.tu", "123", "Nasty");
-        registerHandles.registerNewUser(register);
-
         Login login = new Login("ppp@ggg.fu", register.getPassword());
         ValidatableResponse response = loginHandles.login(login);
 
@@ -38,9 +45,6 @@ public class LoginTest {
     }
     @Test
     public void loginWithWrongPassword(){
-        Register register = new Register("ppp@ppp.tu", "123", "Nasty");
-        registerHandles.registerNewUser(register);
-
         Login login = new Login(register.getEmail(), "fjfgjkfkj");
         ValidatableResponse response = loginHandles.login(login);
 
