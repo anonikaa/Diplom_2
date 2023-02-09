@@ -1,7 +1,5 @@
 import handles.RegisterHandles;
 import io.restassured.response.ValidatableResponse;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import pojo.Register;
 
@@ -15,7 +13,7 @@ public class RegisterTest {
 
     @Test
     public void successRegister(){
-        register = new Register("anana@hrr.com", "123456", "name");
+        register = new Register(TestData.registerEmail, TestData.registerPassword, TestData.registerName);
         registerHandles = new RegisterHandles();
         ValidatableResponse response = registerHandles.registerNewUser(register);
         assertEquals(200, response.extract().statusCode());
@@ -24,7 +22,7 @@ public class RegisterTest {
     }
     @Test
     public void registerExistedUser(){
-        register = new Register("test@test.com", "123456", "name");
+        register = new Register(TestData.EXIST_EMAIL, TestData.EXIST_PASSWORD, TestData.EXIST_NAME);
         registerHandles = new RegisterHandles();
         ValidatableResponse response = registerHandles.registerNewUser(register);
         String message = response.extract().path("message");
@@ -33,7 +31,7 @@ public class RegisterTest {
     }
     @Test
     public void registerWithEmptyEmail(){
-        register = new Register("", "123456", "name");
+        register = new Register(TestData.EMPTY_FIELD, TestData.registerPassword, TestData.registerName);
         registerHandles = new RegisterHandles();
         ValidatableResponse response = registerHandles.registerNewUser(register);
         String message = response.extract().path("message");
@@ -43,7 +41,7 @@ public class RegisterTest {
 
     @Test
     public void registerWithEmptyPassword(){
-        register = new Register("anana@hrr.com", "", "name");
+        register = new Register(TestData.registerEmail, TestData.EMPTY_FIELD, TestData.registerName);
         registerHandles = new RegisterHandles();
         ValidatableResponse response = registerHandles.registerNewUser(register);
         String message = response.extract().path("message");
@@ -52,7 +50,7 @@ public class RegisterTest {
     }
     @Test
     public void registerWithEmptyName(){
-        register = new Register("anana@hrr.com", "123456", "");
+        register = new Register(TestData.registerEmail, TestData.registerPassword, TestData.EMPTY_FIELD);
         registerHandles = new RegisterHandles();
         ValidatableResponse response = registerHandles.registerNewUser(register);
         String message = response.extract().path("message");

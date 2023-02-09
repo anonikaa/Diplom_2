@@ -11,7 +11,6 @@ public class RegisterHandles {
                 .when()
                 .post("https://stellarburgers.nomoreparties.site/api/auth/register").then();
     }
-    //тут чё-то надо передавать конечно
     public ValidatableResponse deleteUser (String token){
         return given()
                 .header("Content-type", "application/json")

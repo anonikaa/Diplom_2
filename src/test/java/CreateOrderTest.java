@@ -35,7 +35,7 @@ public class CreateOrderTest {
 
     }
     @Test
-    //тут баг
+    //тут баг, но может и фича. Но я не понимаю почему можно создать заказ без авторизации, кому он создатся
     public void createOrderNoAuthorization(){
         Ingredients ingredients = new Ingredients(id);
         ValidatableResponse response = orderHandles.createOrder(ingredients, "");
