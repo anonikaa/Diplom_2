@@ -17,7 +17,7 @@ public class ChangeUserDataTest {
     ChangeUserData changeUserData;
     @Before
     public void setUp(){
-        register = new Register("login@test.ru", "password", "name");
+        register = new Register(TestData.registerEmail, TestData.registerPassword, TestData.registerName);
         registerHandles = new RegisterHandles();
         token = registerHandles.registerNewUser(register).extract().path("accessToken");
         changeUserDataHandles = new ChangeUserDataHandles();

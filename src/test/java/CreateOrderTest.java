@@ -16,7 +16,7 @@ public class CreateOrderTest {
     String token;
     @Before
     public void setUp(){
-        register = new Register("login@test.ru", "password", "name");
+        register = new Register(TestData.registerEmail, TestData.registerPassword, TestData.registerName);
         registerHandles = new RegisterHandles();
         orderHandles = new OrderHandles();
         token = registerHandles.registerNewUser(register).extract().path("accessToken");
