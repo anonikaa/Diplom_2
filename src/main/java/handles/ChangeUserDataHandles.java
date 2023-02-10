@@ -12,6 +12,6 @@ public class ChangeUserDataHandles {
                 .header("Authorization", token)
                 .body(changeUserData)
                 .when()
-                .patch("https://stellarburgers.nomoreparties.site/api/auth/user").then();
+                .patch("/api/auth/user").then();
     }
 }

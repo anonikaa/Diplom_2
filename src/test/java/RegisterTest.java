@@ -1,5 +1,8 @@
 import handles.RegisterHandles;
+import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import pojo.Register;
 
@@ -8,8 +11,20 @@ import static org.junit.Assert.assertEquals;
 public class RegisterTest {
     private RegisterHandles registerHandles;
     private Register register;
+    private Register registerNew;
     private String token;
 
+    @Before
+    public void setUp(){
+        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+    }
+    @After
+    public void cleanUp(){
+        token = registerHandles.registerNewUser(register).extract().path("accessToken");
+        if (token != null){
+            registerHandles.deleteUser(token);
+        }
+    }
 
     @Test
     public void successRegister(){
@@ -17,14 +32,16 @@ public class RegisterTest {
         registerHandles = new RegisterHandles();
         ValidatableResponse response = registerHandles.registerNewUser(register);
         assertEquals(200, response.extract().statusCode());
-        token = response.extract().path("accessToken");
-        registerHandles.deleteUser(token);
+        //token = response.extract().path("accessToken");
+        //registerHandles.deleteUser(token);
     }
     @Test
     public void registerExistedUser(){
-        register = new Register(TestData.EXIST_EMAIL, TestData.EXIST_PASSWORD, TestData.EXIST_NAME);
+        register = new Register(TestData.registerEmail, TestData.registerPassword, TestData.registerName);
+        registerNew = new Register(register.getEmail(), register.getPassword(), register.getName());
         registerHandles = new RegisterHandles();
-        ValidatableResponse response = registerHandles.registerNewUser(register);
+        registerHandles.registerNewUser(register);
+        ValidatableResponse response = registerHandles.registerNewUser(registerNew);
         String message = response.extract().path("message");
         assertEquals(403, response.extract().statusCode());
         assertEquals("User already exists", message);

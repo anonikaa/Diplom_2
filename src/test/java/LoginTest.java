@@ -1,5 +1,6 @@
 import handles.LoginHandles;
 import handles.RegisterHandles;
+import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +17,8 @@ public class LoginTest {
     String token;
     @Before
     public void setUp(){
-        register = new Register("anana@hrr.com", "123456", "name");
+        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+        register = new Register(TestData.registerEmail, TestData.registerPassword, TestData.registerName);
         registerHandles = new RegisterHandles();
         loginHandles = new LoginHandles();
         token = registerHandles.registerNewUser(register).extract().path("accessToken");

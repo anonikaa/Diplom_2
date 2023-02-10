@@ -12,13 +12,13 @@ public class OrderHandles {
                 .header("authorization", token)
                 .body(ingredients)
                 .when()
-                .post("https://stellarburgers.nomoreparties.site/api/orders").then();
+                .post("/api/orders").then();
     }
     public ValidatableResponse getUserOrder(String token){
         return given()
                 .header("Content-type", "application/json")
                 .header("Authorization", token)
                 .when()
-                .get("https://stellarburgers.nomoreparties.site/api/orders").then();
+                .get("/api/orders").then();
     }
 }

@@ -9,13 +9,13 @@ public class RegisterHandles {
                 .header("Content-type", "application/json")
                 .body(register)
                 .when()
-                .post("https://stellarburgers.nomoreparties.site/api/auth/register").then();
+                .post("/api/auth/register").then();
     }
     public ValidatableResponse deleteUser (String token){
         return given()
                 .header("Content-type", "application/json")
                 .header("authorization", token)
                 .when()
-                .delete("https://stellarburgers.nomoreparties.site/api/auth/user").then();
+                .delete("/api/auth/user").then();
     }
 }

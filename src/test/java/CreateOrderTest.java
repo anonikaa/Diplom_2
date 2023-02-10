@@ -1,5 +1,6 @@
 import handles.OrderHandles;
 import handles.RegisterHandles;
+import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,6 +17,7 @@ public class CreateOrderTest {
     String token;
     @Before
     public void setUp(){
+        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         register = new Register(TestData.registerEmail, TestData.registerPassword, TestData.registerName);
         registerHandles = new RegisterHandles();
         orderHandles = new OrderHandles();

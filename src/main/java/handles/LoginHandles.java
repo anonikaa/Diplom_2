@@ -10,7 +10,7 @@ public class LoginHandles {
                 .header("Content-type", "application/json")
                 .body(login)
                 .when()
-                .post("https://stellarburgers.nomoreparties.site/api/auth/login").then();
+                .post("/api/auth/login").then();
     }
 
 }
