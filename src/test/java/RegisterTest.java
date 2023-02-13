@@ -16,7 +16,7 @@ public class RegisterTest {
 
     @Before
     public void setUp(){
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+        RestAssured.baseURI = TestData.BASE_URL;
     }
     @After
     public void cleanUp(){
@@ -32,8 +32,6 @@ public class RegisterTest {
         registerHandles = new RegisterHandles();
         ValidatableResponse response = registerHandles.registerNewUser(register);
         assertEquals(200, response.extract().statusCode());
-        //token = response.extract().path("accessToken");
-        //registerHandles.deleteUser(token);
     }
     @Test
     public void registerExistedUser(){

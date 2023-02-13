@@ -17,7 +17,7 @@ public class CreateOrderTest {
     String token;
     @Before
     public void setUp(){
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+        RestAssured.baseURI = TestData.BASE_URL;
         register = new Register(TestData.registerEmail, TestData.registerPassword, TestData.registerName);
         registerHandles = new RegisterHandles();
         orderHandles = new OrderHandles();
